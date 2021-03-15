@@ -1,0 +1,195 @@
+When
+    [Case
+        (Choice
+            (ChoiceId
+                "Accept Tenant"
+                (Role "Landlord")
+            )
+            [Bound 1 2]
+        )
+        (If
+            (ValueEQ
+                (ChoiceValue
+                    (ChoiceId
+                        "Accept Tenant"
+                        (Role "Landlord")
+                    ))
+                (Constant 1)
+            )
+            (When
+                [Case
+                    (Deposit
+                        (Role "Landlord")
+                        (Role "Tenant James")
+                        (Token "" "")
+                        (Constant 900)
+                    )
+                    (Let
+                        "Tenancy"
+                        SlotIntervalStart 
+                        (When
+                            [Case
+                                (Choice
+                                    (ChoiceId
+                                        "Break Contract"
+                                        (Role "Tenant James")
+                                    )
+                                    [Bound 1 2]
+                                )
+                                (If
+                                    (ValueEQ
+                                        (ChoiceValue
+                                            (ChoiceId
+                                                "Break Contract"
+                                                (Role "Tenant James")
+                                            ))
+                                        (Constant 1)
+                                    )
+                                    (When
+                                        [Case
+                                            (Choice
+                                                (ChoiceId
+                                                    "Property Inspection"
+                                                    (Role "Landlord")
+                                                )
+                                                [Bound 1 2]
+                                            )
+                                            (If
+                                                (ValueEQ
+                                                    (ChoiceValue
+                                                        (ChoiceId
+                                                            "Property Inspection"
+                                                            (Role "Landlord")
+                                                        ))
+                                                    (Constant 1)
+                                                )
+                                                (Pay
+                                                    (Role "Landlord")
+                                                    (Party (Role "Tenant James"))
+                                                    (Token "" "")
+                                                    (Constant 1000)
+                                                    Close 
+                                                )
+                                                Close 
+                                            )]
+                                        2
+                                        (Pay
+                                            (Role "Landlord")
+                                            (Party (Role "Tenant James"))
+                                            (Token "" "")
+                                            (Constant 1000)
+                                            Close 
+                                        )
+                                    )
+                                    (Assert
+                                        (ValueEQ
+                                            (ChoiceValue
+                                                (ChoiceId
+                                                    "Break Contract"
+                                                    (Role "Tenant James")
+                                                ))
+                                            (Constant 2)
+                                        )
+                                        (Let
+                                            "End Tenancy"
+                                            SlotIntervalEnd 
+                                            (When
+                                                [Case
+                                                    (Choice
+                                                        (ChoiceId
+                                                            "Property Inspection"
+                                                            (Role "Landlord")
+                                                        )
+                                                        [Bound 1 2]
+                                                    )
+                                                    (If
+                                                        (ValueEQ
+                                                            (ChoiceValue
+                                                                (ChoiceId
+                                                                    "Property Inspection"
+                                                                    (Role "Landlord")
+                                                                ))
+                                                            (Constant 1)
+                                                        )
+                                                        (Pay
+                                                            (Role "Landlord")
+                                                            (Party (Role "Tenant James"))
+                                                            (Token "" "")
+                                                            (Constant 1000)
+                                                            Close 
+                                                        )
+                                                        Close 
+                                                    )]
+                                                13
+                                                (Pay
+                                                    (Role "Landlord")
+                                                    (Party (Role "Tenant James"))
+                                                    (Token "" "")
+                                                    (Constant 1000)
+                                                    Close 
+                                                )
+                                            )
+                                        )
+                                    )
+                                )]
+                            12
+                            (Let
+                                "End Tenancy"
+                                SlotIntervalEnd 
+                                (When
+                                    [Case
+                                        (Choice
+                                            (ChoiceId
+                                                "Property Inspection"
+                                                (Role "Landlord")
+                                            )
+                                            [Bound 1 2]
+                                        )
+                                        (If
+                                            (ValueEQ
+                                                (ChoiceValue
+                                                    (ChoiceId
+                                                        "Property Inspection"
+                                                        (Role "Landlord")
+                                                    ))
+                                                (Constant 1)
+                                            )
+                                            (Pay
+                                                (Role "Landlord")
+                                                (Party (Role "Tenant James"))
+                                                (Token "" "")
+                                                (Constant 1000)
+                                                Close 
+                                            )
+                                            Close 
+                                        )]
+                                    13
+                                    (Pay
+                                        (Role "Landlord")
+                                        (Party (Role "Tenant James"))
+                                        (Token "" "")
+                                        (Constant 1000)
+                                        Close 
+                                    )
+                                )
+                            )
+                        )
+                    )]
+                1 Close 
+            )
+            (Pay
+                (Role "Landlord")
+                (Party (Role "Tenant James"))
+                (Token "" "")
+                (Constant 100)
+                Close 
+            )
+        )]
+    1
+    (Pay
+        (Role "Landlord")
+        (Party (Role "Tenant James"))
+        (Token "" "")
+        (Constant 100)
+        Close 
+    )
